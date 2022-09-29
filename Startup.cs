@@ -15,6 +15,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.IdentityModel.Tokens;
+
+
 
 namespace EntityFramework_codefirst
 {
@@ -38,6 +41,24 @@ namespace EntityFramework_codefirst
             });
             services.AddDbContext<AgendasCodeContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("SqlServer")).UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = "JwtBearer";
+                options.DefaultChallengeScheme = "JwtBearer";
+            })
+                .AddJwtBearer("JwtBearer", options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("cripto-chave-autenticacao")),
+                        ClockSkew = TimeSpan.FromMinutes(30),
+                        ValidIssuer = "cripto.webAPI",
+                        ValidAudience = "cripto.webAPI"
+                    };
+                });
             services.AddTransient<AgendasCodeContext, AgendasCodeContext>();
             services.AddTransient<IConsultaRepository, ConsultaRepository>();
             services.AddTransient<IMedicoRepository, MedicoRepository>();
@@ -45,6 +66,7 @@ namespace EntityFramework_codefirst
             services.AddTransient<ITipoUsuarioRepository, TipoUsuarioRepository>();
             services.AddTransient<IUsuarioRepository, UsuarioRepository>();
             services.AddTransient<IPacienteRepository, PacienteRepository>();
+            services.AddTransient<ILoginRepository, LoginRepository>();
 
 
         }
@@ -63,6 +85,7 @@ namespace EntityFramework_codefirst
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -72,3 +95,4 @@ namespace EntityFramework_codefirst
         }
     }
 }
+

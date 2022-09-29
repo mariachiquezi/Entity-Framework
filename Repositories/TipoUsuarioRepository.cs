@@ -36,6 +36,7 @@ namespace EntityFramework_codefirst.Repositories
         public void Excluir(TipoUsuario tipoUsuario)
         {
             ctx.TipoUsuario.Remove(tipoUsuario);
+            ctx.SaveChanges();
         }
 
         public TipoUsuario Inserir(TipoUsuario tipoUsuario)

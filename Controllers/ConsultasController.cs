@@ -1,5 +1,6 @@
 ﻿using EntityFramework_codefirst.Interfaces;
 using EntityFramework_codefirst.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -23,6 +24,7 @@ namespace EntityFramework_codefirst.Controllers
         /// </summary>
         /// <param name="consulta">Dados da consulta</param>
         /// <returns>Dados cadastrados</returns>
+        
         [HttpPost]
         public IActionResult Cadastrar(Consulta consulta)
         {
@@ -104,6 +106,7 @@ namespace EntityFramework_codefirst.Controllers
         /// <param name="id">Pegar consulta por id</param>
         /// <param name="consulta">Guardar dados consulta</param>
         /// <returns>Consulta alterada</returns>
+        [Authorize(Roles = "Adm")]
         [HttpPut("{id}")]
         public IActionResult Alterar(int id, Consulta consulta)
         {
@@ -139,6 +142,7 @@ namespace EntityFramework_codefirst.Controllers
         /// <param name="id">Pegar consulta por id</param>
         /// <param name="patchConsulta">Objeto que tera a parte alterada</param>
         /// <returns>Objeto parcialmente alterado</returns>
+        [Authorize(Roles = "Adm")]
         [HttpPatch("{id}")]
         public IActionResult Patch(int id, [FromBody] JsonPatchDocument patchConsulta)
         {
@@ -179,6 +183,7 @@ namespace EntityFramework_codefirst.Controllers
         /// </summary>
         /// <param name="id">Pegar consulta por id</param>
         /// <returns>Consulta excluida</returns>
+        [Authorize(Roles = "Adm")]
         [HttpDelete("{id}")]
         public IActionResult Excluir(int id)
         {

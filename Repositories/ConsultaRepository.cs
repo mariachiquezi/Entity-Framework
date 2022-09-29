@@ -38,6 +38,7 @@ namespace EntityFramework_codefirst.Repositories
         public void Excluir(Consulta consulta)
         {
             ctx.Consulta.Remove(consulta);
+            ctx.SaveChanges();
         }
 
         public Consulta Inserir(Consulta consulta)

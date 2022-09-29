@@ -1,5 +1,6 @@
 ﻿using EntityFramework_codefirst.Interfaces;
 using EntityFramework_codefirst.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +25,7 @@ namespace EntityFramework_codefirst.Controllers
         /// </summary>
         /// <param name="paciente">Dados do paciente</param>
         /// <returns>Paciente cadastrado</returns>
+        
         [HttpPost]
         public IActionResult Cadastrar(Paciente paciente)
         {
@@ -106,6 +108,7 @@ namespace EntityFramework_codefirst.Controllers
         /// <param name="id">Pegar paciente por id</param>
         /// <param name="paciente">Dadoss do paciente</param>
         /// <returns>Paciente alterado</returns>
+        [Authorize(Roles = "Paciente")]
         [HttpPut("{id}")]
         public IActionResult Alterar(int id, Paciente paciente)
         {
@@ -141,6 +144,7 @@ namespace EntityFramework_codefirst.Controllers
         /// <param name="id">Pegar paciente por id</param>
         /// <param name="patchPaciente">Dados do paciente parcialmente alterado</param>
         /// <returns>Paciente parcialmente alterado</returns>
+        [Authorize(Roles = "Paciente")]
         [HttpPatch("{id}")]
         public IActionResult Patch(int id, [FromBody] JsonPatchDocument patchPaciente)
         {
@@ -181,6 +185,7 @@ namespace EntityFramework_codefirst.Controllers
         /// </summary>
         /// <param name="id">Pegar paciente por id</param>
         /// <returns>Paciente excluido</returns>
+        [Authorize(Roles = "Paciente")]
         [HttpDelete("{id}")]
         public IActionResult Excluir(int id)
         {

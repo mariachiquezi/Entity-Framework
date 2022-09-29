@@ -36,6 +36,7 @@ namespace EntityFramework_codefirst.Repositories
         public void Excluir(Paciente paciente)
         {
             ctx.Paciente.Remove(paciente);
+            ctx.SaveChanges();
         }
 
         public Paciente Inserir(Paciente paciente)

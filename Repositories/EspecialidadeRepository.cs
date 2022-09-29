@@ -36,6 +36,7 @@ namespace EntityFramework_codefirst.Repositories
         public void Excluir(Especialidade especialidade)
         {
             ctx.Especialidade.Remove(especialidade);
+            ctx.SaveChanges();
         }
 
         public Especialidade Inserir(Especialidade especialidade)

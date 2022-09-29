@@ -1,5 +1,6 @@
 ﻿using EntityFramework_codefirst.Interfaces;
 using EntityFramework_codefirst.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -178,6 +179,7 @@ namespace EntityFramework_codefirst.Controllers
         /// </summary>
         /// <param name="id">Pegar TipoUsuario por id</param>
         /// <returns>TipoUsuario excluido</returns>
+       
         [HttpDelete("{id}")]
         public IActionResult Excluir(int id)
         {
